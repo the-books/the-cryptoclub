@@ -69,15 +69,54 @@ function decodingText(keyword, keyLetter, text) {
     table.set(key, value);
   }
 
-  console.log(table.get('Y'));
-  console.log(table.get('A'));
-  console.log(table.get('F'));
-  console.log(table.get('W'));
-  console.log(table.get('A'));
-  console.log(table.get('F'));
-  console.log(table.get('Z'));
-  return '';
+  const result = [];
+  const iterator1 = text.split('').values();
+  for (const value of iterator1) {
+    if (table.has(value)) {
+      result.push(table.get(value));
+    } else {
+      result.push(value);
+    }
+  }
+  return result.join('');
 }
 
 
-decodingText('DANNA', 'h', 'XYZ');
+const quiz0 = decodingText('DANNA', 'h', 'YAFWAFZ DTCY T PGJE');
+console.log(quiz0);
+
+const quiz1 = decodingText('HOUSE', 'm', 'OU. CVQJ LAQ MUAO');
+console.log(quiz1);
+
+const quiz2 = decodingText('MUSIC', 'd', 'VHPL UXLMLPFN');
+console.log(quiz2);
+
+const quiz3 = decodingText('FISH', 'a', 'TDA MNQTD FMH RNUTD ONKAR');
+console.log(quiz3);
+
+const quiz4 = decodingText('ANIMAL', 'g', 'ZEH NEBXIDA OF KNY FUDKJ');
+console.log(quiz4);
+
+const quiz5 = decodingText('RABBIT', 'f', 'WS BVKZHDVFZ');
+console.log(quiz5);
+
+const quiz6 = decodingText('MISSISSIPPI', 'd', 'IXLN HS ZHLG');
+console.log(quiz6);
+
+const qText = `
+OLIL FIL ROL JLRFQWT ZM ROL ZPRJZZI HWPG'T TVQ
+RIQS: ROL RBZ-JFD RIQS RZ SQYL XZPYRFQY BQWW GL
+TFRPIJFD FYJ TPYJFD, ROL MQITR BLLVLYJ QY MLGIPFID.
+
+ROL GPT BQWW WLFAL MIZX ROL SFIV'T OLFJKPFIRLIT
+FR LQNOR FX FYJ ILRPIY FR RLY SX TPYJFD.
+
+ILNQTRIFRQZY MZIXT FIL JPL GD YLCR MIQJFD SQHV
+ROLX PS QY ROL SFIV ZMMQHL
+
+ROL RIQS QT WQXQRLJ RZ ROL MQITR RBLYRD BOZ.
+TQNY PS, TZ SWLFTL OPIID ZI ROLIL XQNOR YZR GL
+LYZPNO TSFHL.
+`;
+const quiz7 = decodingText('SKITRIP', 'p', qText);
+console.log(quiz7);
