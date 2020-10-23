@@ -26,6 +26,26 @@ function uniq(keyword) {
   return result;
 }
 
+function remainder(cipher) {
+  return cipher % KEY_LETTERS.length;
+}
+
+/**
+ * 입력된 자리 만큼 이동시킨 대체 암호 문자를 배열로 반환한다.
+ * @param {Number} cipher 알파벳을 이동시킬 자리 수
+ * @returns {Array} 자리 수 만큼 이동된 알파벳 배열
+ */
+function makeCipher(cipher) {
+  let index = remainder(cipher);
+  if (index < 0) {
+    index += KEY_LETTERS.length;
+  }
+  const front = KEY_LETTERS.slice(index);
+  const back = KEY_LETTERS.slice(0, index);
+
+  return front.concat(back);
+}
+
 /**
  * 
  * @param {string} keyword 키워드 단어
@@ -37,10 +57,27 @@ function decodingText(keyword, keyLetter, text) {
   const keywords = uniq(keyword);
   const cryptoLetters = new Set([...keywords, ...ORIGIN_LETTERS]);
 
-  cryptoLetters.forEach(letter => console.log(letter));
+  const index = KEY_LETTERS.indexOf(keyLetter);
+  const ciphers = makeCipher(index);
 
+  const table = new Map();
+  const keys = cryptoLetters.values();
+  const iterator = ciphers.values();
+
+  for (const value of iterator) {
+    let key = keys.next().value;
+    table.set(key, value);
+  }
+
+  console.log(table.get('Y'));
+  console.log(table.get('A'));
+  console.log(table.get('F'));
+  console.log(table.get('W'));
+  console.log(table.get('A'));
+  console.log(table.get('F'));
+  console.log(table.get('Z'));
   return '';
 }
 
 
-decodingText('DANNY', 'p', 'XYZ');
+decodingText('DANNA', 'h', 'XYZ');
