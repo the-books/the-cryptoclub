@@ -19,6 +19,28 @@ Whether you're a brand new Redux user setting up your first project, or an exper
 Redux Toolkit is available as a package on NPM for use with a module bundler or in a Node application:
 `;
 
+const text3 = `
+Y XTNDQ DNQYS EFNFYSU JKLM
+NUUSGUPTQ FXTL JYII WYHT
+NJNL VDTT PYDPGE FYPCTFE FS
+FXT VYDEF FJTUFL-VYHT ATSAIT
+JXS PNII YU. YF ESGUQE IYCT
+VGU. ITF'E NII PNII NUQ WS
+FSWTFXTD.
+`;
+
+const text4 = `
+BQGKNJG SDKT CDQ MGVLQETD
+BQGKNSLK G CGKNSLJD KDW SCEQT
+MLQ CES REQTCNGY. UKMLQTUKGTDIY,
+ET CGN G SEZD MLUQTDDK ALIIGQ
+GKN TCD RLY CGN G SEZD SEXTDDK
+KDAH. CD NUTEMUI I'Y WQLTD CDQ,
+"NDGQ BQGJJY, TCGKHS CDGOS. E'N
+WQETD JLQD RUT E'J GII ACLHDN
+UQ."
+`;
+
 // 'A' = 65
 // 'Z' = 90
 // 'a' = 97
@@ -27,7 +49,8 @@ Redux Toolkit is available as a package on NPM for use with a module bundler or 
 // { count: 0, fraction: '', decimal: .000, percent: 0.0 },
 
 function countText(text) {
-  const total_length = text.length;
+  // const total_length = text.length;
+  let total_length = 0;
   const letters_count = {
     a: 0, b: 0, c: 0, d: 0, e: 0, f: 0,
     g: 0, h: 0, i: 0, j: 0, k: 0, l: 0,
@@ -42,28 +65,37 @@ function countText(text) {
     const charCode = text_lowerCase.charCodeAt(i);
     if (charCode >= 97 && charCode <= 122) {
       letters_count[char] += 1;
+      total_length += 1;
     }
   }
 
   const keys = Object.keys(letters_count);
   const frequency = keys.map(key => {
     const count = letters_count[key];
-    const decimal = parseFloat((count / total_length).toFixed(2));
+    const decimal = parseFloat((count / total_length).toFixed(3));
     return {
-        key,
-        count,
-        fraction: `${count} / ${total_length}`,
-        decimal,
-        percent: parseFloat((decimal * 100).toFixed(0)),
+      key,
+      count,
+      fraction: `${count} / ${total_length}`,
+      decimal,
+      percent: parseFloat((decimal * 100).toFixed(1)),
     };
   })
 
   return {
     total_length,
     // letters_count,
-    frequency,
+    frequency: frequency.sort((a, b) => {
+      if (a.count > b.count) {
+        return -1;
+      }
+      if (a.count < b.count) {
+        return 1;
+      }
+      return 0;
+    }),
   };
 }
 
-const result = countText(text2);
+const result = countText(text4);
 console.log(result);

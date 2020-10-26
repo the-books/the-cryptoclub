@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/ch4/ch4"
+    "start": "node ./src/ch5/decode1"
   },
   "author": "",
   "license": "ISC"
