@@ -52,7 +52,7 @@ MOXD ZOBCZSBKDSYX.
 
 const roll_count = 10;
 
-function reRoll(c_sentence, r_count) {
+function reRoll(c_sentence: string, r_count: number) {
   const count = r_count % 26;
   const c_letters = c_sentence.split('');
 
@@ -79,3 +79,4 @@ console.log(crypto_sentence9);
 console.log('\n');
 console.log('*Origin Text:');
 console.log(result);
+
