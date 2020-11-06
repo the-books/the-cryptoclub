@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "node ./src/ch1/quiz"
+    "start": "node ./dist/ch1/quiz"
   },
   "author": "",
   "license": "ISC",

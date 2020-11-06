@@ -1,4 +1,5 @@
-const CIPHER_ALPHABET: ReadonlyArray<string> = [
+// 암호 문자('A' ~ 'Z'). 단일문자. 대문자.
+const CIPHER_ALPHABETS: ReadonlyArray<string> = [
   'A', 'B', 'C', 'D', 'E', 'F',
   'G', 'H', 'I', 'J', 'K', 'L',
   'M', 'N', 'O', 'P', 'Q', 'R',
@@ -6,11 +7,11 @@ const CIPHER_ALPHABET: ReadonlyArray<string> = [
   'Y', 'Z'
 ];
 
-const SIZE_ALPHABET: number = CIPHER_ALPHABET.length;
+// 암호 문자('A' ~ 'Z')의 갯수
+const SIZE_ALPHABETS: number = CIPHER_ALPHABETS.length;
 
-const CODE_A = CIPHER_ALPHABET[0].charCodeAt(0);
-
-const CODE_Z = CIPHER_ALPHABET[SIZE_ALPHABET - 1].charCodeAt(0);
+// 문자('A')의 UTF-16 코드
+const CIPHER_A = CIPHER_ALPHABETS[0].charCodeAt(0);
 
 /**
  * 입력된 문자가 암호 알파벳 배열('A' ~ 'Z')에 포함된 문자인지 결과를 반환한다.
@@ -22,13 +23,16 @@ const CODE_Z = CIPHER_ALPHABET[SIZE_ALPHABET - 1].charCodeAt(0);
  * isCipher('a');
  * @example
  * // returns false
- * isCipher('?');
+ * isCipher('@');
  * @param {string} alphabet 확인이 필요한 알파벳
- * @returns {Boolean} 암호 알파벳 확인 결과
+ * @returns {boolean} 암호 알파벳 확인 결과
  */
 function isCipher(alphabet: string): boolean {
-  const charCode = alphabet.charCodeAt(0);
-  return charCode >= CODE_A && charCode <= CODE_Z;
+  return CIPHER_ALPHABETS.includes(alphabet);
+}
+
+function isCycleNumber(move: number): boolean {
+  return move >= 0 && move < SIZE_ALPHABETS;
 }
 
 /**
@@ -44,10 +48,10 @@ function isCipher(alphabet: string): boolean {
  * cycleNumber(-1);
  */
 function cycleNumber(move: number): number {
-  let remainder = move % SIZE_ALPHABET;
+  let remainder = move % SIZE_ALPHABETS;
 
   if (remainder < 0) {
-    remainder = remainder + SIZE_ALPHABET;
+    remainder = remainder + SIZE_ALPHABETS;
   }
 
   return remainder;
@@ -57,17 +61,17 @@ function cycleNumber(move: number): number {
  * 입력된 수 만큼 이동시킨 암호 알파벳 배열을 반환한다.
  * @example <caption>3칸 자리이동을 한다. (반시계방향)</caption>
  * // returns ['D', 'E', 'F', ..., 'A', 'B', 'C']
- * cipher(3);
+ * ciphers(3);
  * @example <caption>뒤로 3칸 자리이동을 한다. (시계방향)</caption>
  * // returns ['X', 'Y', 'Z', 'A', 'B', 'C', ...]
- * cipher(-3);
+ * ciphers(-3);
  * @param {Number} move 알파벳을 이동시킬 자리 수
  * @returns {Array} 암호 알파벳 배열
  */
-function cipher(move: number): ReadonlyArray<string> {
+function ciphers(move: number): ReadonlyArray<string> {
   const index = cycleNumber(move);
-  const prev = CIPHER_ALPHABET.slice(index);
-  const next = CIPHER_ALPHABET.slice(0, index);
+  const prev = CIPHER_ALPHABETS.slice(index);
+  const next = CIPHER_ALPHABETS.slice(0, index);
 
   return prev.concat(next);
 }
@@ -76,26 +80,31 @@ function cipher(move: number): ReadonlyArray<string> {
  * 입력된 알파벳으로 시작하는 암호 알파벳 배열을 반환한다.
  * @example <caption>'D'로 시작하는 암호 알파벳</caption>
  * // returns ['D', 'E', 'F', ... 'Z', 'A', 'B', 'C']
- * cipher('D');
+ * ciphersWithAlphabet('D');
  * @example <caption>'X'로 시작하는 암호 알파벳</caption>
  * // returns ['X', 'Y', 'Z', 'A', 'B', 'C', ... 'W']
- * cipher('X');
+ * ciphersWithAlphabet('X');
  * @param {string} alphabet 알파벳 문자
  * @returns {Array} 암호 알파벳 배열
  */
-function cipherByAlphabet(alphabet: string): ReadonlyArray<string> {
+function ciphersWithAlphabet(alphabet: string): ReadonlyArray<string> {
   if (alphabet.length !== 1) {
     throw Error('alphabet must be one digit');
   }
 
-  const move = alphabet.charCodeAt(0) - CODE_A;
+  if (!isCipher(alphabet)) {
+    throw Error('alphabet is not a cipher letter');
+  }
 
-  return cipher(move);
+  const move = alphabet.charCodeAt(0) - CIPHER_A;
+
+  return ciphers(move);
 }
 
 export {
   isCipher,
+  isCycleNumber,
   cycleNumber,
-  cipher,
-  cipherByAlphabet,
+  ciphers,
+  ciphersWithAlphabet,
 };

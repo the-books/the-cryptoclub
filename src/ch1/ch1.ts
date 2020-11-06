@@ -1,7 +1,7 @@
 import {
   isCipher,
   cycleNumber,
-  cipher,
+  ciphers,
 } from '../cipher/cipher';
 
 const KEY_LETTERS = [
@@ -14,12 +14,12 @@ const KEY_LETTERS = [
 
 function encoding(text: string, move = 3): string {
   const result = [];
-  const CRYPTO_LETTERS = cipher(cycleNumber(move));
+  const CRYPTO_LETTERS = ciphers(cycleNumber(move));
 
   for (let i = 0; i < text.length; i++) {
     const char = text.charAt(i);
-    const charCode = text.charCodeAt(i);
-    if (charCode >= 97 && charCode <= 122) {
+
+    if (KEY_LETTERS.includes(char)) {
       const index = KEY_LETTERS.indexOf(char);
       result.push(CRYPTO_LETTERS[index]);
     } else {
@@ -32,12 +32,12 @@ function encoding(text: string, move = 3): string {
 
 function decoding(text: string, move = 3): string {
   const result = [];
-  const CRYPTO_LETTERS = cipher(cycleNumber(move));
+  const CRYPTO_LETTERS = ciphers(cycleNumber(move));
 
   for (let i = 0; i < text.length; i++) {
     const char = text.charAt(i);
-    const charCode = text.charCodeAt(i);
-    if (charCode >= 65 && charCode <= 90) {
+
+    if (isCipher(char)) {
       const index = CRYPTO_LETTERS.indexOf(char);
       result.push(KEY_LETTERS[index]);
     } else {
