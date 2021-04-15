@@ -1,23 +1,10 @@
-type Alphabet = "A" | "B" | "C" | "D" | "E" | "F"
-              | "G" | "H" | "I" | "J" | "K" | "L"
-              | "M" | "N" | "O" | "P" | "Q" | "R"
-              | "S" | "T" | "U" | "V" | "W" | "X"
-              | "Y" | "Z" ;
+type Alphabet = "A" | "B" | "C" | "D" | "E" | "F" |
+                "G" | "H" | "I" | "J" | "K" | "L" |
+                "M" | "N" | "O" | "P" | "Q" | "R" |
+                "S" | "T" | "U" | "V" | "W" | "X" |
+                "Y" | "Z" ;
 
-type Decimal =  0 |  1 |  2 |  3 |  4 |  5
-             |  6 |  7 |  8 |  9 | 10 | 11
-             | 12 | 13 | 14 | 15 | 16 | 17
-             | 18 | 19 | 20 | 21 | 22 | 23
-             | 24 | 25;
-
-
-// type CiphersAlphabet = ReadonlyArray<Alphabet>;
-// type CiphersDecimal = ReadonlyArray<Decimal>;
-// type CiphersArray = CiphersAlphabet | CiphersDecimal;
-
-// type CiphersSomething = ReadonlyArray<Alphabet | Decimal>;
-// type CiphersArray = ;
-
+type Alphabet_Array = ReadonlyArray<Alphabet>;
 
 // 암호 문자
 const CIPHERS_ALPHABET: ReadonlyArray<Alphabet> = [
@@ -28,17 +15,8 @@ const CIPHERS_ALPHABET: ReadonlyArray<Alphabet> = [
   'Y', 'Z'
 ];
 
-// 암호 문자
-// const CIPHERS_DECIMAL: CiphersArray<Decimal> = [
-//   0,  1,  2,  3,  4,  5,
-//   6,  7,  8,  9, 10, 11,
-//  12, 13, 14, 15, 16, 17,
-//  18, 19, 20, 21, 22, 23,
-//  24, 25
-// ];
-
 // 암호 문자의 갯수
-// const SIZE_CIPHERS: number = DEFAULT_CIPHERS.length;
+const SIZE_CIPHERS: number = CIPHERS_ALPHABET.length;
 
 // 첫번째 암호 문자의 UTF-16 코드
 // const FIRST_CIPHER = DEFAULT_CIPHERS[0].charCodeAt(0);
@@ -64,18 +42,18 @@ function isCipher(character: Alphabet): boolean {
  * // returns 25
  * cycleNumber(-1);
  */
-// function cycleNumber(move: number): number {
-//   let remainder = move % SIZE_CIPHERS;
+function cycleNumber(move: number): number {
+  let remainder = move % SIZE_CIPHERS;
 
-//   if (remainder < 0) {
-//     remainder = remainder + SIZE_CIPHERS;
-//   }
+  if (remainder < 0) {
+    remainder = remainder + SIZE_CIPHERS;
+  }
 
-//   return remainder;
-// }
+  return remainder;
+}
 
 class Ciphers {
-  private ciphers: CiphersArray;
+  private ciphers: Alphabet_Array;
   // private movedCiphers: CiphersArray;
 
   constructor(init_ciphers: CiphersArray) {

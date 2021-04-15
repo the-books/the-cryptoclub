@@ -27,11 +27,13 @@ const CIPHER_A = CIPHER_ALPHABETS[0].charCodeAt(0);
  * @param {string} alphabet 확인이 필요한 알파벳
  * @returns {boolean} 암호 알파벳 확인 결과
  */
-function isCipher(alphabet: string): boolean {
+type IsCipher = (alphabet: string) => boolean;
+const isCipher: IsCipher = (alphabet) => {
   return CIPHER_ALPHABETS.includes(alphabet);
 }
 
-function isCycleNumber(move: number): boolean {
+type IsCycleNumber = (move: number) => boolean;
+const isCycleNumber: IsCycleNumber = (move) => {
   return move >= 0 && move < SIZE_ALPHABETS;
 }
 
@@ -47,7 +49,8 @@ function isCycleNumber(move: number): boolean {
  * // returns 25
  * cycleNumber(-1);
  */
-function cycleNumber(move: number): number {
+type CycleNumber = (move: number) => number;
+const cycleNumber: CycleNumber = (move: number) => {
   let remainder = move % SIZE_ALPHABETS;
 
   if (remainder < 0) {
